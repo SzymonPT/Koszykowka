@@ -1,18 +1,29 @@
 package com.example.koszykowka;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class PunktyViewModel extends ViewModel {
-    private int punkty;
+    private MutableLiveData punkty;
 
-    public int getPunkty() {
+    public MutableLiveData<Integer> getPunkty() {
+        if(punkty == null){
+            punkty = new MutableLiveData<>();
+            punkty.setValue(0);
+        }
         return punkty;
     }
 
-    public void setPunkty(int punkty) {
+    public void setPunkty(MutableLiveData punkty) {
+        if(punkty == null){
+            punkty = new MutableLiveData<>();
+            punkty.setValue(0);
+        }
         this.punkty = punkty;
     }
+
     public  void addPunkty(int p){
-        punkty+=p;
+        int aktualnepunkty = getPunkty().getValue();
+        punkty.setValue(0);
     }
 }

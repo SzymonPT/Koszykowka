@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.koszykowka.databinding.ActivityMainBinding;
@@ -29,13 +30,20 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(view);
         punktyViewModel = new ViewModelProvider(this).get(PunktyViewModel.class);
-        binding.TextViewPunkty.setText(String.valueOf(punktyViewModel.getPunkty()));
+        punktyViewModel.getPunkty().observe(
+                this,
+                new Observer<Integer>() {
+                    @Override
+                    public void onChanged(Integer integer) {
+                        binding.TextViewPunkty.setText(integer.toString());
+                    }
+                }
+        );
         binding.button.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         punktyViewModel.addPunkty(1);
-                        binding.TextViewPunkty.setText(String.valueOf(punktyViewModel.getPunkty()));
                     }
                 }
         );
@@ -44,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         punktyViewModel.addPunkty(2);
-                        binding.TextViewPunkty.setText(String.valueOf(punktyViewModel.getPunkty()));
                     }
                 }
         );
@@ -53,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         punktyViewModel.addPunkty(3);
-                        binding.TextViewPunkty.setText(String.valueOf(punktyViewModel.getPunkty()));
                     }
                 }
         );
